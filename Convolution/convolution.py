@@ -33,7 +33,7 @@ def multiplies(stride, gray_img, factor, kernel):
     #row and column to access the kernel
     kernel_i = 0
     kernel_j = 0
-    while count <= 8:
+    while count < len(kernel)* len(kernel[0]):
         if kernel_j == len(kernel):
             kernel_i += 1
             kernel_j = 0
@@ -45,7 +45,7 @@ def multiplies(stride, gray_img, factor, kernel):
         kernel_j += 1
     return sum
 
-def convolution(img, file):
+def convolution(img, file, step):
     gray_img = cv.cvtColor(cv.imread(img), cv.COLOR_BGR2GRAY)
     kernel = create_kernel(file)
     factor = len(kernel) // 2
@@ -54,28 +54,28 @@ def convolution(img, file):
     convolution_row = []
     #nº of iterations
     #n = (len(gray_img) - ((len(kernel) // 2) * 2)) * (len(gray_img[0]) - ((len(kernel) // 2) * 2))
-    while stride[0] != len(gray_img) - factor -1:
-        if stride[1] == len(gray_img[0]) - factor - 1:
-            stride[0] += 1
+    while stride[0] != len(gray_img) - factor - step:
+        if (stride[1] == len(gray_img[0]) - factor) or (stride[1] == len(gray_img[0]) - factor - step):
+            stride[0] += step
             stride[1] = factor
             convolution_matrix.append(convolution_row)
             convolution_row = []
         summ =  multiplies(stride, gray_img, factor, kernel)
         convolution_row.append(summ)
-        stride[1] += 1
+        stride[1] += step
     #print(convolution_matrix)
-    img_out = np.uint8(convolution_matrix)
-    #print(gray_img[0])
-    #print(gray_img[1])
-    #print(gray_img[2])
-    #print(convolution_matrix[0])
-    #cv.imshow("Imagem original", gray_img)
+    img_out8 = np.uint8(convolution_matrix)
+    img_out16 = np.uint16(convolution_matrix)
+    img_out32 = np.uint32(convolution_matrix)
     plt.subplot(2,2,1),plt.imshow(gray_img,cmap = 'gray')
     plt.title('Original'), plt.xticks([]), plt.yticks([])
-    plt.subplot(2,2,2),plt.imshow(img_out,cmap = 'gray')
-    plt.title('Convolution'), plt.xticks([]), plt.yticks([])
+    plt.subplot(2,2,2),plt.imshow(img_out8,cmap = 'gray')
+    plt.title('Convolution uint8'), plt.xticks([]), plt.yticks([])
+    plt.subplot(2,2,3),plt.imshow(img_out16,cmap = 'gray')
+    plt.title('Convolution uint16'), plt.xticks([]), plt.yticks([])
+    plt.subplot(2,2,4),plt.imshow(img_out32,cmap = 'gray')
+    plt.title('Convolution uint32'), plt.xticks([]), plt.yticks([])
     plt.show()
     cv.waitKey(0)
     plt.close('all')
-convolution(sys.argv[1], sys.argv[2])
-#print(create_kernel(sys.argv[2]))
+convolution(sys.argv[1], sys.argv[2], int(sys.argv[3]))
