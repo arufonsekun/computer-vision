@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-#Lê o arquivo converte valores para inteiro e estrutura em forma de matriz
+#Lê o arquivo converte valores para inteiro e estrutura a matriz
 def create_kernel(file):
     kernel_file = open(file,'r').read().splitlines()
     matrix_string = []
@@ -50,7 +50,7 @@ def convolution(img, file, step):
     #Cria a matriz kernel a partir do arquivo
     kernel = create_kernel(file)
 
-    #Distancia entre o pixel de referencia (pixel do stride) e os pixels mais externos
+    #Distância entre o pixel de referência (pixel do stride) e os pixels mais externos
     factor = len(kernel) // 2
 
     #Lista com o pixel de referencia
@@ -58,7 +58,6 @@ def convolution(img, file, step):
 
     convolution_matrix = []
     convolution_row = []
-
 
     count_line = 1
     count_column = 1
@@ -94,6 +93,5 @@ def convolution(img, file, step):
     plt.title('uint32'), plt.xticks([]), plt.yticks([])
     plt.show()
     cv.waitKey(0)
-    plt.close('all')
 convolution(sys.argv[1], sys.argv[2], int(sys.argv[3]))
 #print(create_kernel(sys.argv[2]))
