@@ -93,5 +93,5 @@ def convolution(img, file, step):
     plt.title('uint32'), plt.xticks([]), plt.yticks([])
     plt.show()
     cv.waitKey(0)
+#Ordem dos parametros: imagem(.png,.jpeg,) arquivo do kernel(.txt) e stride(int)
 convolution(sys.argv[1], sys.argv[2], int(sys.argv[3]))
-#print(create_kernel(sys.argv[2]))
