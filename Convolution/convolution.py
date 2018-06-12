@@ -29,7 +29,7 @@ def multiplies(stride, gray_img, factor, kernel):
     #Valores que acessam o elemento "esquerda superior" a partir do elemento de referência
     img_i = stride[0] - factor
     img_j = stride[1] - factor
-    sum = 0
+    sum1 = 0
     count = 0
     kernel_i = 0
     kernel_j = 0
@@ -40,10 +40,10 @@ def multiplies(stride, gray_img, factor, kernel):
             img_i += 1
             img_j = stride[1] - factor
         count += 1
-        sum += kernel[kernel_i][kernel_j] * gray_img[img_i][img_j]
+        sum1 += kernel[kernel_i][kernel_j] * gray_img[img_i][img_j]
         img_j += 1
         kernel_j += 1
-    return sum
+    return sum1
 
 def convolution(img, file, step):
     gray_img = cv.cvtColor(cv.imread(img), cv.COLOR_BGR2GRAY)
@@ -83,6 +83,7 @@ def convolution(img, file, step):
     img_out32 = np.uint32(convolution_matrix)
 
     #Plota as imagens
+    #img_out8.save('out.png')
     plt.subplot(2,2,1),plt.imshow(gray_img,cmap = 'gray')
     plt.title('Original'), plt.xticks([]), plt.yticks([])
     plt.subplot(2,2,2),plt.imshow(img_out8,cmap = 'gray')
