@@ -15,7 +15,7 @@ def create_kernel(file):
     j = 0
     count = 0
     while count < len(matrix_string[0]) * len(matrix_string):
-        row.append(int(matrix_string[i][j]))
+        row.append(float(matrix_string[i][j]))
         count += 1
         j += 1
         if len(row) == len(matrix_string):
@@ -29,7 +29,7 @@ def multiplies(stride, gray_img, factor, kernel):
     #Valores que acessam o elemento "esquerda superior" a partir do elemento de referência
     img_i = stride[0] - factor
     img_j = stride[1] - factor
-    sum = 0
+    sum1 = 0
     count = 0
     kernel_i = 0
     kernel_j = 0
@@ -40,10 +40,10 @@ def multiplies(stride, gray_img, factor, kernel):
             img_i += 1
             img_j = stride[1] - factor
         count += 1
-        sum += kernel[kernel_i][kernel_j] * gray_img[img_i][img_j]
+        sum1 += kernel[kernel_i][kernel_j] * gray_img[img_i][img_j]
         img_j += 1
         kernel_j += 1
-    return sum
+    return int(max(0, min(255, sum1)))
 
 def convolution(img, file, step):
     gray_img = cv.cvtColor(cv.imread(img), cv.COLOR_BGR2GRAY)
@@ -76,22 +76,10 @@ def convolution(img, file, step):
         convolution_row.append(summ)
         stride[1] += step
 
-
     #Converte a matriz do python para uma matriz do numpy
-    img_out8 = np.uint8(convolution_matrix)
-    img_out16 = np.uint16(convolution_matrix)
-    img_out32 = np.uint32(convolution_matrix)
-
-    #Plota as imagens
-    plt.subplot(2,2,1),plt.imshow(gray_img,cmap = 'gray')
-    plt.title('Original'), plt.xticks([]), plt.yticks([])
-    plt.subplot(2,2,2),plt.imshow(img_out8,cmap = 'gray')
-    plt.title('uint8'), plt.xticks([]), plt.yticks([])
-    plt.subplot(2,2,3),plt.imshow(img_out16,cmap = 'gray')
-    plt.title('uint16'), plt.xticks([]), plt.yticks([])
-    plt.subplot(2,2,4),plt.imshow(img_out32,cmap = 'gray')
-    plt.title('uint32'), plt.xticks([]), plt.yticks([])
-    plt.show()
-    cv.waitKey(0)
+    img_out8 = np.array(convolution_matrix, dtype=np.uint8)
+    #Salva a imagem
+    print()
+    cv.imwrite("out/"+file[8:-4]+img, img_out8)
 #Ordem dos parametros: imagem(.png,.jpeg,) arquivo do kernel(.txt) e stride(int)
 convolution(sys.argv[1], sys.argv[2], int(sys.argv[3]))
