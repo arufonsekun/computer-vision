@@ -1,0 +1,22 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get distro-upgrade
+sudo apt install python-pip
+sudo apt install python3-pip
+pip install numpy
+pip3 install numpy
+pip install opencv-python
+pip3 install opencv-python
+pip install opencv-contrib-python
+pip3 install opencv-contrib-python
+pip install matplotlib
+pip3 install matplotlib
+pip install scikit-learn
+pip3 install scikit-learn
+pip install pandas
+pip3 install pandas
+sudo apt-get install tesseract-ocr
+sudo apt-get install tesseract-ocr-por
+sudo apt-get install tesseract-ocr-jpn
+sudo apt-get install tesseract-ocr-kor
+
