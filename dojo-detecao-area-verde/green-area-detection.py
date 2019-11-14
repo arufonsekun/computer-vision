@@ -38,8 +38,23 @@ blur_intensity = 5
 gaussian = cv2.blur(img, (blur_intensity, blur_intensity))
 saturated = dstretch(img)
 
-cv2.imshow('Gaussian blur', gaussian)
-cv2.imshow('Original Image', img)
-cv2.imshow('saturated', saturated)
+saturated[:,:,0] = 0
+saturated[:,:,2] = 0
+
+ret, binarizada = cv2.threshold(saturated, 127, 255, cv2.THRESH_BINARY)
+
+kernel = np.ones((blur_intensity, blur_intensity), np.uint8)
+eroded = cv2.erode(binarizada, kernel, iterations=1)
+
+mask = cv2.cvtColor(eroded, cv2.COLOR_BGR2GRAY)
+classified = cv2.subtract(img, eroded)
+
+# cv2.imshow('Gaussian blur', gaussian)
+# cv2.imshow('Original Image', img)
+# cv2.imshow('Extraction channels', saturated)
+# cv2.imshow('Binarized', binarizada)
+# cv2.imshow('Classified', classified)
+cv2.imshow("Morphologic", eroded)
+cv2.imshow('mask', mask)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
