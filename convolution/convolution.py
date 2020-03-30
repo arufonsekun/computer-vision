@@ -78,8 +78,11 @@ def convolution(img, file, step):
 
     #Converte a matriz do python para uma matriz do numpy
     img_out8 = np.array(convolution_matrix, dtype=np.uint8)
+
     #Salva a imagem
-    print()
-    cv.imwrite("out/"+file[8:-4]+img, img_out8)
+    filterName = file.split('/')[1]
+    imgName = img.split('/')[1]
+    print(filterName+'-'+imgName)
+    cv.imwrite("output/"+filterName+'-'+imgName, img_out8)
 #Ordem dos parametros: imagem(.png,.jpeg,) arquivo do kernel(.txt) e stride(int)
 convolution(sys.argv[1], sys.argv[2], int(sys.argv[3]))
