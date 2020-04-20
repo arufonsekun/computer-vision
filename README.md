@@ -1,5 +1,5 @@
 <p align="center">
-    <img src = "https://raw.githubusercontent.com/arufonsekun/event-manager-uffs/readme-improvements/public/img/logo_uffs.png" width="493" height="228" />
+    <img src = "logo_uffs.png" width="754" height="359" />
 </p>
 
 <h2 align="center"> Computer Vision UFFS</h2>
